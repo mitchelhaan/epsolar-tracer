@@ -44,10 +44,15 @@ class Value:
         else:
             self.value = value
 
+    def __repr__(self):
+        if self.value is None:
+            return self.register.name + " = " + str(self.value)
+        return self.register.name + " = " + str(self.value) + " " + self.register.unit()[1]
+
     def __str__(self):
         if self.value is None:
-            return self.register.name + " = " + str(self.value) 
-        return self.register.name + " = " + str(self.value) + self.register.unit()[1]
+            return str(self.value)
+        return str(self.value) + " " + self.register.unit()[1]
 
     def __float__(self):
         return float(self.value)
