@@ -1,8 +1,8 @@
 # -*- coding: iso-8859-15 -*-
 
 # import the server implementation
-from pymodbus.client.sync import ModbusSerialClient as ModbusClient
-from pymodbus.mei_message import *
+from pymodbus3.client.sync import ModbusSerialClient as ModbusClient
+from pymodbus3.mei_message import *
 from pyepsolartracer.registers import registerByName
 
 #---------------------------------------------------------------------------#
@@ -19,7 +19,7 @@ class EPsolarTracerClient:
         ''' Initialize a serial client instance
         '''
         self.unit = unit
-        if serialclient == None:
+        if serialclient is None:
             port = kwargs.get('port', '/dev/ttyXRUSB0')
             baudrate = kwargs.get('baudrate', 115200)
             self.client = ModbusClient(method = 'rtu', port = port, baudrate = baudrate, kwargs = kwargs)

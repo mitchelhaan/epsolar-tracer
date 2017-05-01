@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-15 -*-
+# -*- coding: utf-8 -*-
 #
 # From the PDF
 
@@ -17,7 +17,7 @@ def AH():
 def W():
     return [ 'Watt', 'W' ]
 def C():
-    return [ 'degree Celsius', '°C' ] # \0xb0
+    return [ 'degree Celsius', 'Â°C' ] # \0xb0
 def PC():
     return [ '%, percentage', '%' ]
 def KWH():
@@ -427,7 +427,7 @@ Register("Battery Capacity",
   AH, 1 ),
 # Temperature compensation coefficient
 Register("Temperature compensation coefficient",
-  0x9002, "Range 0-9 mV/°C/2V",
+  0x9002, "Range 0-9 mV/Â°C/2V",
   I, 100 ),
 # High Volt.disconnect
 Register("High Volt.disconnect",
@@ -678,18 +678,19 @@ _registerByName = {}
 
 for reg in registers:
     name = reg.name
-    if _registerByName.has_key(name):
+    if name in _registerByName:
         raise Exception("internal error " + name)
     _registerByName[name] = reg
 
 for reg in coils:
     name = reg.name
-    if _registerByName.has_key(name):
+    if name in _registerByName:
         raise Exception("internal error " + name)
     _registerByName[name] = reg
 
+
 def registerByName(name):
-    if not _registerByName.has_key(name):
+    if name not in _registerByName:
         raise Exception("Unknown register "+repr(name))
     return _registerByName[name]
     
