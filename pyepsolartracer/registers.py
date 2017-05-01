@@ -2,9 +2,9 @@
 #
 # From the PDF
 
-#---------------------------------------------------------------------------#
+# --------------------------------------------------------------------------- #
 # Logging
-#---------------------------------------------------------------------------#
+# --------------------------------------------------------------------------- #
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -68,10 +68,10 @@ class Register:
         return self.address < 0x1000
 
     def is_discrete_input(self):
-        return self.address >= 0x1000 and self.address < 0x3000
+        return 0x1000 <= self.address < 0x3000
 
     def is_input_register(self):
-        return self.address >= 0x3000 and self.address < 0x9000
+        return 0x3000 <= self.address < 0x9000
 
     def is_holding_register(self):
         return self.address >= 0x9000
@@ -81,13 +81,13 @@ class Register:
             mask = rawvalue = lastvalue = 0
             for i in range(self.size):
                 lastvalue = response.getRegister(i)
-                rawvalue = rawvalue | (lastvalue << (i * 16))
+                rawvalue |= lastvalue << (i * 16)
                 mask = (mask << 16) | 0xffff
             if (lastvalue & 0x8000) == 0x8000:
                 #print rawvalue
                 rawvalue = -(rawvalue ^ mask) - 1
             return Value(self, rawvalue)
-        _logger.info ("No value for register " + repr(self.name))
+        _logger.info("No value for register " + repr(self.name))
         return Value(self, None)
 
     def encode(self, value):
@@ -521,8 +521,8 @@ Register("Power component temperature upper limit recover",
 Register("Line Impedance",
   0x901D, "The resistance of the connectted wires.",
   MO, 100 ),
-# Night TimeThreshold Volt.(NTTV)
-Register("Night TimeThreshold Volt.(NTTV)",
+# Night Time Threshold Volt.(NTTV)
+Register("Night Time Threshold Volt.(NTTV)",
   0x901E, " PV lower lower than this value, controller would detect it as sundown",
   V, 100 ),
 # Light signal startup (night) delay time
